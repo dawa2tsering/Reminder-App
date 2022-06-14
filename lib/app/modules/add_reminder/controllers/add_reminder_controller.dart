@@ -6,6 +6,7 @@ import 'package:reminder_app/app/database/database_helper.dart';
 import 'package:reminder_app/app/locator.dart/locator.dart';
 import 'package:reminder_app/app/modules/home/controllers/home_controller.dart';
 
+
 class AddReminderController extends GetxController {
   // ignore: todo
   //TODO: Implement AddReminderController
@@ -36,6 +37,8 @@ class AddReminderController extends GetxController {
         ? _homeController.startTimer()
         : null;
   }
+
+  
 
   @override
   void onReady() {

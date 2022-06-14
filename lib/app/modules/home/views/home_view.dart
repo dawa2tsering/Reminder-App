@@ -109,6 +109,7 @@ class HomeView extends GetView<HomeController> {
                                         ? _homeController.reminderDueSoon.length
                                         : 4,
                                 itemBuilder: (context, index) {
+                                  
                                   return Column(
                                     children: [
                                       ReminderBox(

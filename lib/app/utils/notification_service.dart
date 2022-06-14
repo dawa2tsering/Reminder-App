@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -16,6 +17,9 @@ class NotificationService {
   //initializing local notification package
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
+  //using rxdart package to listen our notification being tapped or not
+  static final onNotification = BehaviorSubject<String?>();
 
   //initializing platform specifics
   Future<void> init() async {
@@ -40,12 +44,14 @@ class NotificationService {
 
     //initializing flutter local notification with platform specific instance and on select method
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: selectNotification);
+        onSelectNotification: onSelectNotification);
   }
 
   //method to create a function which runs when notification is tapped.
-  Future selectNotification(String? payload) async {
-    //Handle notification tapped logic here
+  Future onSelectNotification(String? payload) async {
+    //adding payload on stream so that when notification is tapped it can get the pay load
+    onNotification.add(payload);
+    
   }
 
   //Defining how notification will look like in android platform
@@ -58,7 +64,7 @@ class NotificationService {
   static const NotificationDetails platformChannelSpecifics =
       NotificationDetails(android: androidPlatformChannelSpecifics);
 
-  //method to show notification
+  /////////////////////////////////////////////////////method to show notification/////////////////////////////////////////////////////////////////////////
   //id identify notification uniquely (same id notification can only be called once and different id notification can be called multiple times)
   static Future showNotification(
       {int id = 0, String? title, String? body, String? payload}) async {
@@ -68,6 +74,29 @@ class NotificationService {
       body,
       platformChannelSpecifics,
       payload: payload,
+    );
+  }
+
+  /////////////////////////////////////////////////////method to schedule notification/////////////////////////////////////////////////////////////////////////
+  //id identify notification uniquely (same id notification can only be called once and different id notification can be called multiple times)
+  static Future scheduleNotification(
+      {int id = 0,
+      String? title,
+      String? body,
+      required tz.TZDateTime scheduledDate,
+      String? payload,
+      DateTimeComponents? matchDateTimeComponents}) async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      scheduledDate,
+      platformChannelSpecifics,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+      payload: payload,
+      matchDateTimeComponents: matchDateTimeComponents,
     );
   }
 }

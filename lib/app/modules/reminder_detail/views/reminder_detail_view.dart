@@ -14,6 +14,8 @@ import '../controllers/reminder_detail_controller.dart';
 class ReminderDetailView extends GetView<ReminderDetailController> {
   final _reminderDetailController = Get.put(ReminderDetailController());
   final CategoryController _categoryController = Get.put(CategoryController());
+  String? id;
+  ReminderDetailView({Key? key, this.id}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -46,6 +48,7 @@ class ReminderDetailView extends GetView<ReminderDetailController> {
             const SizedBox(
               height: 10,
             ),
+            Text(id!),
             GestureDetector(
               onTap: () {},
               child: box(

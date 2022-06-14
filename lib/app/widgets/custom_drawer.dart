@@ -2,7 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:reminder_app/app/modules/add_reminder/views/add_reminder_view.dart';
 import 'package:reminder_app/app/modules/category/controllers/category_controller.dart';
@@ -12,6 +11,7 @@ import 'package:reminder_app/app/modules/due_soon/views/due_soon_view.dart';
 import 'package:reminder_app/app/modules/over_due/views/over_due_view.dart';
 import 'package:reminder_app/app/modules/reminder_category/views/reminder_category_view.dart';
 import 'package:reminder_app/app/utils/notification_service.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({Key? key}) : super(key: key);
@@ -156,6 +156,23 @@ class CustomDrawer extends StatelessWidget {
                     id: 1, title: 'tsering', body: "adf", payload: 'laksksdj');
               },
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 40),
+            child: ListTile(
+                title: Text(
+                  'schedule notification',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                onTap: () async {
+                  await NotificationService.scheduleNotification(
+                      id: 1,
+                      title: 'hlw',
+                      body: "prashanna sir",
+                      scheduledDate: tz.TZDateTime.now(tz.local)
+                          .add(const Duration(seconds: 10)),
+                      payload: 'laksksdj');
+                }),
           ),
           MaterialButton(
             onPressed: () => Get.to(() => CategoryView()),

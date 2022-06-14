@@ -2,13 +2,12 @@
 
 import 'dart:async';
 import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:reminder_app/app/database/database_helper.dart';
 import 'package:reminder_app/app/locator.dart/locator.dart';
 import 'package:reminder_app/app/model/reminder.dart';
+import 'package:reminder_app/app/utils/notification_service.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class HomeController extends GetxController {
   // ignore: todo
@@ -80,6 +79,16 @@ class HomeController extends GetxController {
         (a, b) => DateTime.parse(a!.time!).compareTo(DateTime.parse(b!.time!)));
     reminderNoAlert.sort((b, a) => a!.id!.compareTo(b!.id!));
     loading.value = false;
+  }
+
+
+  scheduleReminder({int? id, String? title, String? body, DateTime? dateTime})async{
+     await NotificationService.scheduleNotification(
+                      id: 1,
+                      title: title,
+                      body: "prashanna sir",
+                      scheduledDate: tz.TZDateTime(tz.local, dateTime!.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute),
+                      payload: 'laksksdj');
   }
 
   updateReminderByStatus(int? id) async {

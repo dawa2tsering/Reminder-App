@@ -23,7 +23,7 @@ dependencies:
   intl: ^0.17.0
   simple_animations:
   flutter_local_notifications: 
-
+  rxdart: ^0.27.4
 
 
 dev_dependencies:

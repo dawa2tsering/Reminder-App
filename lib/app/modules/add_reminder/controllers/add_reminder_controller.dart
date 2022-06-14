@@ -32,6 +32,9 @@ class AddReminderController extends GetxController {
       "category": categoryId.toString(),
     });
     _homeController.getReminder();
+    _homeController.reminderDueSoon.isEmpty
+        ? _homeController.startTimer()
+        : null;
   }
 
   @override

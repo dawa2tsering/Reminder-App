@@ -16,7 +16,6 @@ class HomeView extends GetView<HomeController> {
   final widgetUpdateHelper = locator<WidgetUpdateHelper>();
   @override
   Widget build(BuildContext context) {
-    log("${_homeController.reminder}");
     return Obx(
       () => CustomeHomePage(
         title: "My Reminder",
@@ -26,143 +25,167 @@ class HomeView extends GetView<HomeController> {
             horizontal: 10,
           ),
           children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Text('Past'),
-            const SizedBox(
-              height: 20,
-            ),
             _homeController.loading.value == true
                 ? const Center(
                     child: CircularProgressIndicator.adaptive(),
                   )
                 : _homeController.reminderOverdue.isEmpty
-                    ? const Center(
-                        child: Text("No data."),
-                      )
-                    : MediaQuery.removePadding(
-                        context: context,
-                        removeTop: true,
-                        child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount:
-                                _homeController.reminderOverdue.length <= 4
-                                    ? _homeController.reminderOverdue.length
-                                    : 4,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  ReminderBox(
-                                    memo: _homeController
-                                        .reminderOverdue[index]!.memo,
-                                    date: _homeController
-                                        .reminderOverdue[index]!.time,
-                                    onChecked: () {
-                                      _homeController.updateReminderByStatus(
+                    ? const SizedBox()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text('Past'),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          MediaQuery.removePadding(
+                            context: context,
+                            removeTop: true,
+                            child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount:
+                                    _homeController.reminderOverdue.length <= 4
+                                        ? _homeController.reminderOverdue.length
+                                        : 4,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    children: [
+                                      ReminderBox(
+                                        memo: _homeController
+                                            .reminderOverdue[index]!.memo,
+                                        date: _homeController
+                                            .reminderOverdue[index]!.time,
+                                        onChecked: () {
                                           _homeController
-                                              .reminderOverdue[index]!.id);
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              );
-                            }),
+                                              .updateReminderByStatus(
+                                                  _homeController
+                                                      .reminderOverdue[index]!
+                                                      .id);
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  );
+                                }),
+                          ),
+                        ],
                       ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text('Soon'),
-            const SizedBox(
-              height: 20,
-            ),
             _homeController.loading.value == true
                 ? const Center(
                     child: CircularProgressIndicator.adaptive(),
                   )
                 : _homeController.reminderDueSoon.isEmpty
-                    ? const Center(
-                        child: Text("No data."),
-                      )
-                    : MediaQuery.removePadding(
-                        context: context,
-                        removeTop: true,
-                        child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount:
-                                _homeController.reminderDueSoon.length <= 4
-                                    ? _homeController.reminderDueSoon.length
-                                    : 4,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  ReminderBox(
-                                    memo: _homeController
-                                        .reminderDueSoon[index]!.memo,
-                                    date: _homeController
-                                        .reminderDueSoon[index]!.time,
-                                    onChecked: () {
-                                      _homeController.updateReminderByStatus(
+                    ? const SizedBox()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text('Soon'),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          MediaQuery.removePadding(
+                            context: context,
+                            removeTop: true,
+                            child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount:
+                                    _homeController.reminderDueSoon.length <= 4
+                                        ? _homeController.reminderDueSoon.length
+                                        : 4,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    children: [
+                                      ReminderBox(
+                                        memo: _homeController
+                                            .reminderDueSoon[index]!.memo,
+                                        date: _homeController
+                                            .reminderDueSoon[index]!.time,
+                                        onChecked: () {
                                           _homeController
-                                              .reminderDueSoon[index]!.id);
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              );
-                            }),
+                                              .updateReminderByStatus(
+                                                  _homeController
+                                                      .reminderDueSoon[index]!
+                                                      .id);
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  );
+                                }),
+                          ),
+                        ],
                       ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text('No alert'),
-            const SizedBox(
-              height: 20,
-            ),
             _homeController.loading.value == true
                 ? const Center(
                     child: CircularProgressIndicator.adaptive(),
                   )
                 : _homeController.reminderNoAlert.isEmpty
-                    ? const Center(
-                        child: Text("No data."),
-                      )
-                    : MediaQuery.removePadding(
-                        context: context,
-                        removeTop: true,
-                        child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount:
-                                _homeController.reminderNoAlert.length <= 4
-                                    ? _homeController.reminderNoAlert.length
-                                    : 4,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  ReminderBox(
-                                    memo: _homeController
-                                        .reminderNoAlert[index]!.memo,
-                                    date: _homeController
-                                        .reminderNoAlert[index]!.time,
-                                    onChecked: () {
-                                      _homeController.updateReminderByStatus(
+                    ? const SizedBox()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text('No alert'),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          MediaQuery.removePadding(
+                            context: context,
+                            removeTop: true,
+                            child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount:
+                                    _homeController.reminderNoAlert.length <= 4
+                                        ? _homeController.reminderNoAlert.length
+                                        : 4,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    children: [
+                                      ReminderBox(
+                                        memo: _homeController
+                                            .reminderNoAlert[index]!.memo,
+                                        date: _homeController
+                                            .reminderNoAlert[index]!.time,
+                                        onChecked: () {
                                           _homeController
-                                              .reminderNoAlert[index]!.id);
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              );
-                            }),
+                                              .updateReminderByStatus(
+                                                  _homeController
+                                                      .reminderNoAlert[index]!
+                                                      .id);
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  );
+                                }),
+                          ),
+                        ],
                       ),
             const SizedBox(
               height: 10,

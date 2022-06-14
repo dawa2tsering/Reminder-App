@@ -1,5 +1,9 @@
 // ignore_for_file: unnecessary_overrides
 
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:reminder_app/app/database/database_helper.dart';
@@ -14,11 +18,36 @@ class HomeController extends GetxController {
   List<Reminder?> reminderDueSoon = RxList();
   List<Reminder?> reminderNoAlert = RxList();
   RxBool loading = false.obs;
+  Timer? timer;
+  var currentTime = DateTime.now();
 
   @override
   void onInit() {
     getReminder();
     super.onInit();
+    // WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {});
+    reminderDueSoon.isNotEmpty ? startTimer() : null;
+  }
+
+  startTimer() {
+    log("started timer");
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      currentTime = DateTime.now();
+      refreshDB();
+    });
+  }
+
+  refreshDB() {
+    if (reminderDueSoon.isNotEmpty) {
+      if (DateTime.parse(reminderDueSoon.first!.time!).isBefore(currentTime)) {
+        getReminder();
+      } else {
+        null;
+      }
+    } else {
+      timer!.cancel();
+      log("canceled timer");
+    }
   }
 
   @override

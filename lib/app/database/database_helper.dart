@@ -57,7 +57,9 @@ class AppDatabase {
   }
 
   List<Category?> categoryList = [];
+  List<Reminder?> allReminder = [];
   List<Reminder?> reminderList = [];
+  List<Reminder?> reminderListById = [];
   List<Reminder?> completeReminderList = [];
   List<Reminder?> reminderCategoryList = [];
 
@@ -108,6 +110,17 @@ class AppDatabase {
     );
   }
 
+  //get all reminder
+  Future<List<Reminder?>> queryAllReminder() async {
+    final db = await database;
+    var reminder = await db!.query(reminderTable);
+    allReminder = reminder.isNotEmpty
+        ? reminder.map((e) => Reminder?.fromJson(e)).toList()
+        : [];
+    log("queried");
+    return [...allReminder];
+  }
+
   //get reminder based on columnStatus which has argument status
   Future<List<Reminder?>> queryReminder({String? status}) async {
     final db = await database;
@@ -120,10 +133,25 @@ class AppDatabase {
     return [...reminderList];
   }
 
-  //update reminder row based on id which has Reminder toJson as reference body
-  Future<int?> updateReminder(Reminder reminder, int? id) async {
+  //get reminder based on columnStatus which has argument status
+  Future<List<Reminder?>> queryReminderById({int? id}) async {
     final db = await database;
-    return await db!.update(reminderTable, reminder.toJson(),
+    var reminder = await db!.query(reminderTable,
+        where: '$columnReminderId IN (?)', whereArgs: [id]);
+    reminderListById = reminder.isNotEmpty
+        ? reminder.map((e) => Reminder?.fromJson(e)).toList()
+        : [];
+    log("queried");
+    return [
+      ...reminderListById
+    ]; //returning reminderListById inside the empty list []
+  }
+
+  //update reminder row based on id which has Reminder toJson as reference body
+  Future<int?> updateReminder(
+      {required Map<String, dynamic> reminder, int? id}) async {
+    final db = await database;
+    return await db!.update(reminderTable, reminder,
         where: '$columnReminderId IN (?)', whereArgs: [id]);
   }
 
@@ -136,8 +164,9 @@ class AppDatabase {
   }
 
   //delete reminder based on id
-  Future<int?> deleteReminder(int? id) async {
+  Future<int?> deleteReminder({int? id}) async {
     final db = await database;
+    log("delete reminder successfully");
     return await db!.delete(reminderTable,
         where: '$columnReminderId IN (?)', whereArgs: [id]);
   }

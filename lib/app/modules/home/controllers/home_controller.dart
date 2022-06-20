@@ -69,6 +69,23 @@ class HomeController extends GetxController {
           DateTime.now()
               .isBefore(DateTime.parse(reminder[i]!.time.toString()))) {
         reminderDueSoon.add(reminder[i]);
+        //utc time is 5 hr and 45 min behind nepal time
+        DateTime dateTime = DateTime.parse(reminder[i]!.time!);
+        log("datetime: $dateTime");
+        log("needed: ${tz.TZDateTime.now(tz.getLocation('Asia/Kathmandu'))}");
+        NotificationService.scheduleNotification(
+            id: reminder[i]!.id!,
+            title: 'Reminder',
+            body: reminder[i]!.memo,
+            dateTime: tz.TZDateTime(
+                tz.getLocation('Asia/Kathmandu'),
+                dateTime.year,
+                dateTime.month,
+                dateTime.day,
+                dateTime.hour,
+                dateTime.minute,
+                dateTime.second),
+            payload: reminder[i]!.id!.toString());
       } else if (reminder[i]!.time == "") {
         reminderNoAlert.add(reminder[i]);
       }
@@ -81,19 +98,10 @@ class HomeController extends GetxController {
     loading.value = false;
   }
 
-
-  scheduleReminder({int? id, String? title, String? body, DateTime? dateTime})async{
-     await NotificationService.scheduleNotification(
-                      id: 1,
-                      title: title,
-                      body: "prashanna sir",
-                      scheduledDate: tz.TZDateTime(tz.local, dateTime!.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute),
-                      payload: 'laksksdj');
-  }
-
   updateReminderByStatus(int? id) async {
     await locator<AppDatabase>()
         .updateReminderStatus(status: 'complete', id: id);
+    NotificationService.cancelScheduleNotification(id: id!);
     getReminder();
   }
 

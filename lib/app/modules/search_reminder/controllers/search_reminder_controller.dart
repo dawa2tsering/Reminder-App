@@ -42,7 +42,7 @@ class SearchReminderController extends GetxController {
 
   getReminderList() async {
     loading.value = true;
-    reminder = await locator<AppDatabase>().queryReminder(status: 'incomplete');
+    reminder = await locator<AppDatabase>().queryAllReminder();
     for (var element in reminder) {
       reminderList.add(element!.memo);
     }

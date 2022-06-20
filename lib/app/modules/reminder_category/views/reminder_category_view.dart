@@ -66,14 +66,10 @@ class ReminderCategoryView extends GetView<ReminderCategoryController> {
                                         return Column(
                                           children: [
                                             ReminderBox(
-                                              memo:
-                                                  _reminderCategoryController
-                                                      .reminderOverdue[index]!
-                                                      .memo,
-                                              date:
-                                                  _reminderCategoryController
-                                                      .reminderOverdue[index]!
-                                                      .time,
+                                              memo: _reminderCategoryController
+                                                  .reminderOverdue[index]!.memo,
+                                              date: _reminderCategoryController
+                                                  .reminderOverdue[index]!.time,
                                               onChecked: () {
                                                 _reminderCategoryController
                                                     .updateReminderByStatus(
@@ -81,6 +77,18 @@ class ReminderCategoryView extends GetView<ReminderCategoryController> {
                                                             .reminderOverdue[
                                                                 index]!
                                                             .id);
+                                              },
+                                              onTap: () {
+                                                Get.to(
+                                                    () => ReminderDetailView(),
+                                                    arguments: {
+                                                      "id":
+                                                          _reminderCategoryController
+                                                              .reminderOverdue[
+                                                                  index]!
+                                                              .id,
+                                                    },
+                                                    popGesture: true);
                                               },
                                             ),
                                             const SizedBox(
@@ -136,6 +144,18 @@ class ReminderCategoryView extends GetView<ReminderCategoryController> {
                                                                 index]!
                                                             .id);
                                               },
+                                              onTap: () {
+                                                Get.to(
+                                                    () => ReminderDetailView(),
+                                                    arguments: {
+                                                      "id":
+                                                          _reminderCategoryController
+                                                              .reminderDueSoon[
+                                                                  index]!
+                                                              .id,
+                                                    },
+                                                    popGesture: true);
+                                              },
                                             ),
                                             const SizedBox(
                                               height: 10,
@@ -189,6 +209,18 @@ class ReminderCategoryView extends GetView<ReminderCategoryController> {
                                                             .reminderNoAlert[
                                                                 index]!
                                                             .id);
+                                              },
+                                              onTap: () {
+                                                Get.to(
+                                                    () => ReminderDetailView(),
+                                                    arguments: {
+                                                      "id":
+                                                          _reminderCategoryController
+                                                              .reminderNoAlert[
+                                                                  index]!
+                                                              .id,
+                                                    },
+                                                    popGesture: true);
                                               },
                                             ),
                                             const SizedBox(

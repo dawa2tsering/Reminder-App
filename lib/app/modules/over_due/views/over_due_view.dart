@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:reminder_app/app/modules/home/controllers/home_controller.dart';
+import 'package:reminder_app/app/modules/reminder_detail/views/reminder_detail_view.dart';
 import 'package:reminder_app/app/widgets/custom_page.dart';
 import 'package:reminder_app/app/widgets/reminder_box.dart';
 
@@ -49,6 +50,14 @@ class OverDueView extends GetView<OverDueController> {
                                       _homeController.updateReminderByStatus(
                                           _homeController
                                               .reminderOverdue[index]!.id);
+                                    },
+                                    onTap: () {
+                                      Get.to(() => ReminderDetailView(),
+                                          arguments: {
+                                            "id": _homeController
+                                                .reminderOverdue[index]!.id,
+                                          },
+                                          popGesture: true);
                                     },
                                   ),
                                   const SizedBox(

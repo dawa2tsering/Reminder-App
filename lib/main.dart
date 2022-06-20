@@ -8,9 +8,10 @@ import 'package:reminder_app/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initLocator();
+  //initializing local notification
   await NotificationService().init();
+  //initializing listen notification
   listenNotification();
-
   runApp(
     const GetMaterialApp(
       debugShowCheckedModeBanner: false,
@@ -19,16 +20,12 @@ void main() async {
   );
 }
 
-//method to listen tap on notification, if the notification is clicked then will execute onClickedNotification function
+//method to listen tap (strem) on notification, if the notification is clicked then will execute onClickedNotification function
 void listenNotification() {
   NotificationService.onNotification.stream.listen(onClickedNotification);
 }
 
 //method to direct to the page (also passes the payload)
 void onClickedNotification(String? payload) {
-  Get.to(() => ReminderDetailView(
-        id: payload,
-      ));
+  Get.to(() => ReminderDetailView(), arguments: {"id": int.parse(payload!)});
 }
-
-

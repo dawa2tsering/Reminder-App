@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:reminder_app/app/modules/home/controllers/home_controller.dart';
+import 'package:reminder_app/app/modules/reminder_detail/views/reminder_detail_view.dart';
 import 'package:reminder_app/app/widgets/custom_page.dart';
 import 'package:reminder_app/app/widgets/reminder_box.dart';
 
@@ -53,6 +54,14 @@ class DueSoonView extends GetView<DueSoonController> {
                                       _homeController.updateReminderByStatus(
                                           _homeController
                                               .reminderDueSoon[index]!.id);
+                                    },
+                                    onTap: () {
+                                      Get.to(() => ReminderDetailView(),
+                                          arguments: {
+                                            "id": _homeController
+                                                .reminderDueSoon[index]!.id,
+                                          },
+                                          popGesture: true);
                                     },
                                   ),
                                   const SizedBox(

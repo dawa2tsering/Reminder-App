@@ -104,7 +104,6 @@ class AddReminderView extends GetView<AddReminderController> {
             const SizedBox(
               height: 10,
             ),
-            
             box(
                 customWidget: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

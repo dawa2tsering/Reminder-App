@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:reminder_app/app/modules/reminder_detail/views/reminder_detail_view.dart';
 import 'package:reminder_app/app/widgets/reminder_detail.dart';
 
 import '../controllers/search_reminder_controller.dart';
@@ -67,23 +68,12 @@ class SearchReminderView extends GetView<SearchReminderController> {
                           .foundReminder[index]!.memo
                           .toString()),
                       onTap: () {
-                        Get.to(() => ReminderDetail(
-                            id: _searchReminderController
-                                .foundReminder[index]!.id,
-                            memo: _searchReminderController
-                                .foundReminder[index]!.memo
-                                .toString(),
-                            time: _searchReminderController
-                                .foundReminder[index]!.time
-                                .toString(),
-                            place: _searchReminderController
-                                .foundReminder[index]!.place
-                                .toString(),
-                            status: _searchReminderController
-                                .foundReminder[index]!.status
-                                .toString(),
-                            category: _searchReminderController
-                                .foundReminder[index]!.category));
+                        Get.to(() => ReminderDetailView(),
+                            arguments: {
+                              "id": _searchReminderController
+                                  .foundReminder[index]!.id,
+                            },
+                            popGesture: true);
                       },
                     ),
                   );

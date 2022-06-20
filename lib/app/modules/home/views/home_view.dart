@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reminder_app/app/locator.dart/locator.dart';
+import 'package:reminder_app/app/modules/reminder_detail/views/reminder_detail_view.dart';
 import 'package:reminder_app/app/utils/widget_update_helper.dart';
 import 'package:reminder_app/app/widgets/custome_home_page.dart';
 import 'package:reminder_app/app/widgets/reminder_box.dart';
@@ -69,6 +70,14 @@ class HomeView extends GetView<HomeController> {
                                                       .reminderOverdue[index]!
                                                       .id);
                                         },
+                                        onTap: () {
+                                          Get.to(() => ReminderDetailView(),
+                                              arguments: {
+                                                "id": _homeController
+                                                    .reminderOverdue[index]!.id,
+                                              },
+                                              popGesture: true);
+                                        },
                                       ),
                                       const SizedBox(
                                         height: 10,
@@ -109,7 +118,6 @@ class HomeView extends GetView<HomeController> {
                                         ? _homeController.reminderDueSoon.length
                                         : 4,
                                 itemBuilder: (context, index) {
-                                  
                                   return Column(
                                     children: [
                                       ReminderBox(
@@ -123,6 +131,14 @@ class HomeView extends GetView<HomeController> {
                                                   _homeController
                                                       .reminderDueSoon[index]!
                                                       .id);
+                                        },
+                                        onTap: () {
+                                          Get.to(() => ReminderDetailView(),
+                                              arguments: {
+                                                "id": _homeController
+                                                    .reminderDueSoon[index]!.id,
+                                              },
+                                              popGesture: true);
                                         },
                                       ),
                                       const SizedBox(
@@ -177,6 +193,14 @@ class HomeView extends GetView<HomeController> {
                                                   _homeController
                                                       .reminderNoAlert[index]!
                                                       .id);
+                                        },
+                                        onTap: () {
+                                          Get.to(() => ReminderDetailView(),
+                                              arguments: {
+                                                "id": _homeController
+                                                    .reminderNoAlert[index]!.id,
+                                              },
+                                              popGesture: true);
                                         },
                                       ),
                                       const SizedBox(

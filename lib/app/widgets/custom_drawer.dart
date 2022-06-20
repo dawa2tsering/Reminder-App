@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -129,51 +131,19 @@ class CustomDrawer extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: ListTile(
-              title: Text(
-                'notification',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              onTap: () async {
-                NotificationService.showNotification(
-                    title: 'dawa',
-                    body: "dfjalsdjlkasjsddf",
-                    payload: 'laksksdj');
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: ListTile(
-              title: Text(
-                'notification 1',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              onTap: () async {
-                NotificationService.showNotification(
-                    id: 1, title: 'tsering', body: "adf", payload: 'laksksdj');
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: ListTile(
-                title: Text(
-                  'schedule notification',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                onTap: () async {
-                  await NotificationService.scheduleNotification(
-                      id: 1,
-                      title: 'hlw',
-                      body: "prashanna sir",
-                      scheduledDate: tz.TZDateTime.now(tz.local)
-                          .add(const Duration(seconds: 10)),
-                      payload: 'laksksdj');
-                }),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 40),
+          //   child: ListTile(
+          //     title: Text(
+          //       'notification',
+          //       style: TextStyle(fontWeight: FontWeight.bold),
+          //     ),
+          //     onTap: () async {
+          //       await NotificationService.showNotification(
+          //           title: 'dawa', body: "dfjalsdjlkasjsddf", payload: '88');
+          //     },
+          //   ),
+          // ),
           MaterialButton(
             onPressed: () => Get.to(() => CategoryView()),
             color: Colors.blue,

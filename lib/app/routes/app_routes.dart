@@ -15,6 +15,7 @@ abstract class Routes {
   static const REMINDER_CATEGORY = _Paths.REMINDER_CATEGORY;
   static const OVER_DUE = _Paths.OVER_DUE;
   static const REMINDER_DETAIL = _Paths.REMINDER_DETAIL;
+  static const NO_ALERT = _Paths.NO_ALERT;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const REMINDER_CATEGORY = '/reminder-category';
   static const OVER_DUE = '/over-due';
   static const REMINDER_DETAIL = '/reminder-detail';
+  static const NO_ALERT = '/no-alert';
 }

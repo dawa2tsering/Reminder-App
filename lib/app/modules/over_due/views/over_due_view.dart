@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -28,8 +30,12 @@ class OverDueView extends GetView<OverDueController> {
                     child: CircularProgressIndicator.adaptive(),
                   )
                 : _homeController.reminderOverdue.isEmpty
-                    ? const Center(
-                        child: Text("No data."),
+                    ? const Padding(
+                        padding: EdgeInsets.only(top: 100),
+                        child: Text(
+                          "No data.",
+                          textAlign: TextAlign.center,
+                        ),
                       )
                     : MediaQuery.removePadding(
                         context: context,

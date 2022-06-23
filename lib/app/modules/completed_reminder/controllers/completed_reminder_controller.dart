@@ -10,7 +10,7 @@ class CompletedReminderController extends GetxController {
   // ignore: todo
   //TODO: Implement CompletedReminderController
   RxBool loading = false.obs;
-  List<Reminder?> reminder = RxList();
+  List<Reminder?> reminderCompleted = RxList();
   final _homeController = Get.put(HomeController());
   @override
   void onInit() {
@@ -25,13 +25,20 @@ class CompletedReminderController extends GetxController {
 
   getReminder() async {
     loading.value = true;
-    reminder = await locator<AppDatabase>().queryReminder(status: 'complete');
+    reminderCompleted =
+        await locator<AppDatabase>().queryReminder(status: 'complete');
     loading.value = false;
   }
 
   updateReminderByStatus(int? id) async {
     await locator<AppDatabase>()
         .updateReminderStatus(status: 'incomplete', id: id);
+    getReminder();
+    _homeController.getReminder();
+  }
+
+  deleteReminder() async {
+    await locator<AppDatabase>().deleteReminder(status: 'complete');
     getReminder();
     _homeController.getReminder();
   }

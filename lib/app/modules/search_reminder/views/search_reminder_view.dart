@@ -1,11 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:reminder_app/app/modules/reminder_detail/views/reminder_detail_view.dart';
-import 'package:reminder_app/app/widgets/reminder_detail.dart';
 
 import '../controllers/search_reminder_controller.dart';
 

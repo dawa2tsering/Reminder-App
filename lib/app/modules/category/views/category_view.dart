@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:reminder_app/app/widgets/custom_dialogue.dart';
 
 import '../controllers/category_controller.dart';
 
@@ -83,15 +84,29 @@ class CategoryView extends GetView<CategoryController> {
                                         icon: const Icon(Icons.delete),
                                         onPressed: () {
                                           showDialog(
-                                            // ignore: prefer_equal_for_default_values
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return confirmDialogue(
-                                                  context,
-                                                  _categoryController
-                                                      .category[index]!.id);
-                                            },
-                                          );
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return CustomDialogue(
+                                                  title: "Delete",
+                                                  content:
+                                                      "Do you want to Delete Category?",
+                                                  btnText1: "Yes",
+                                                  onPressed1: () async {
+                                                    await _categoryController
+                                                        .deleteCategoryById(
+                                                            id: _categoryController
+                                                                .category[
+                                                                    index]!
+                                                                .id);
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  btnText2: "No",
+                                                  onPressed2: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                );
+                                                //return confirmAllDelete(context);
+                                              });
                                         },
                                       ),
                               ),
@@ -141,10 +156,28 @@ class CategoryView extends GetView<CategoryController> {
                           icon: const Icon(Icons.delete),
                           onPressed: () {
                             showDialog(
-                                // ignore: prefer_equal_for_default_values
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return confirmAllDelete(context);
+                                  return CustomDialogue(
+                                    title: "Delete",
+                                    content:
+                                        "Do you want to Delete All the Categories?",
+                                    btnText1: "Yes",
+                                    onPressed1: () async {
+                                      await _categoryController
+                                          .deleteAllCategory();
+                                      Navigator.of(context).pop();
+                                      _categoryController.editOnpressed.value =
+                                          false;
+                                    },
+                                    btnText2: "No",
+                                    onPressed2: () {
+                                      Navigator.of(context).pop();
+                                      _categoryController.editOnpressed.value =
+                                          false;
+                                    },
+                                  );
+                                  //return confirmAllDelete(context);
                                 });
                           },
                         ),
@@ -181,46 +214,6 @@ class CategoryView extends GetView<CategoryController> {
               },
               child: const Text("Add")),
         ),
-      ],
-    );
-  }
-
-  Widget confirmDialogue(BuildContext context, int? index) {
-    return AlertDialog(
-      title: const Text("Delete Category"),
-      content: const Text("Do you want to Delete Category?"),
-      actions: [
-        TextButton(
-            onPressed: () async {
-              await _categoryController.deleteCategoryById(id: index);
-              Navigator.of(context).pop();
-            },
-            child: const Text("Yes")),
-        TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("No")),
-      ],
-    );
-  }
-
-  Widget confirmAllDelete(BuildContext context) {
-    return AlertDialog(
-      title: const Text("Delete Category"),
-      content: const Text("Do you want to Delete All the Categories?"),
-      actions: [
-        TextButton(
-            onPressed: () async {
-              await _categoryController.deleteAllCategory();
-              Navigator.of(context).pop();
-              _categoryController.editOnpressed.value = false;
-            },
-            child: const Text("Yes")),
-        TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _categoryController.editOnpressed.value = false;
-            },
-            child: const Text("No")),
       ],
     );
   }

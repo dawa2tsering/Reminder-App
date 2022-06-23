@@ -1,11 +1,10 @@
-// ignore_for_file: unnecessary_overrides
+// ignore_for_file: unnecessary_overrides, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reminder_app/app/database/database_helper.dart';
 import 'package:reminder_app/app/locator.dart/locator.dart';
 import 'package:reminder_app/app/modules/home/controllers/home_controller.dart';
-
 
 class AddReminderController extends GetxController {
   // ignore: todo
@@ -30,15 +29,13 @@ class AddReminderController extends GetxController {
       "time": time.toString(),
       "place": placeController.text,
       "status": "incomplete",
-      "category": categoryId.toString(),
+      "category": categoryId.toInt(),
     });
     _homeController.getReminder();
     _homeController.reminderDueSoon.isEmpty
         ? _homeController.startTimer()
         : null;
   }
-
-  
 
   @override
   void onReady() {

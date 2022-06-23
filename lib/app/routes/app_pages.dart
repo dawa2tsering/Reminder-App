@@ -2,8 +2,6 @@ import 'package:get/get.dart';
 
 import '../modules/add_reminder/bindings/add_reminder_binding.dart';
 import '../modules/add_reminder/views/add_reminder_view.dart';
-import '../modules/all_reminder/bindings/all_reminder_binding.dart';
-import '../modules/all_reminder/views/all_reminder_view.dart';
 import '../modules/category/bindings/category_binding.dart';
 import '../modules/category/views/category_view.dart';
 import '../modules/completed_reminder/bindings/completed_reminder_binding.dart';
@@ -12,6 +10,8 @@ import '../modules/due_soon/bindings/due_soon_binding.dart';
 import '../modules/due_soon/views/due_soon_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/no_alert/bindings/no_alert_binding.dart';
+import '../modules/no_alert/views/no_alert_view.dart';
 import '../modules/over_due/bindings/over_due_binding.dart';
 import '../modules/over_due/views/over_due_view.dart';
 import '../modules/reminder_category/bindings/reminder_category_binding.dart';
@@ -52,11 +52,6 @@ class AppPages {
       binding: CategoryBinding(),
     ),
     GetPage(
-      name: _Paths.ALL_REMINDER,
-      page: () => AllReminderView(),
-      binding: AllReminderBinding(),
-    ),
-    GetPage(
       name: _Paths.DUE_SOON,
       page: () => DueSoonView(),
       binding: DueSoonBinding(),
@@ -82,6 +77,11 @@ class AppPages {
       name: _Paths.REMINDER_DETAIL,
       page: () => ReminderDetailView(),
       binding: ReminderDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.NO_ALERT,
+      page: () => NoAlertView(),
+      binding: NoAlertBinding(),
     ),
   ];
 }

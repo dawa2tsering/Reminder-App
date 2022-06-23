@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -8,16 +6,15 @@ import 'package:reminder_app/app/modules/reminder_detail/views/reminder_detail_v
 import 'package:reminder_app/app/widgets/custom_page.dart';
 import 'package:reminder_app/app/widgets/reminder_box.dart';
 
-import '../controllers/due_soon_controller.dart';
+import '../controllers/no_alert_controller.dart';
 
-class DueSoonView extends GetView<DueSoonController> {
-  DueSoonView({Key? key}) : super(key: key);
-
+// ignore: use_key_in_widget_constructors
+class NoAlertView extends GetView<NoAlertController> {
   final HomeController _homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Obx(() => CustomPage(
-        title: 'Due Soon',
+        title: 'No Alert',
         body: ListView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(
@@ -31,7 +28,7 @@ class DueSoonView extends GetView<DueSoonController> {
                 ? const Center(
                     child: CircularProgressIndicator.adaptive(),
                   )
-                : _homeController.reminderDueSoon.isEmpty
+                : _homeController.reminderNoAlert.isEmpty
                     ? const Padding(
                         padding: EdgeInsets.only(top: 100),
                         child: Text(
@@ -45,25 +42,25 @@ class DueSoonView extends GetView<DueSoonController> {
                         child: ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: _homeController.reminderDueSoon.length,
+                            itemCount: _homeController.reminderNoAlert.length,
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
                                   ReminderBox(
                                     memo: _homeController
-                                        .reminderDueSoon[index]!.memo,
+                                        .reminderNoAlert[index]!.memo,
                                     date: _homeController
-                                        .reminderDueSoon[index]!.time,
+                                        .reminderNoAlert[index]!.time,
                                     onChecked: () {
                                       _homeController.updateReminderByStatus(
                                           _homeController
-                                              .reminderDueSoon[index]!.id);
+                                              .reminderNoAlert[index]!.id);
                                     },
                                     onTap: () {
                                       Get.to(() => ReminderDetailView(),
                                           arguments: {
                                             "id": _homeController
-                                                .reminderDueSoon[index]!.id,
+                                                .reminderNoAlert[index]!.id,
                                           },
                                           popGesture: true);
                                     },

@@ -1,7 +1,8 @@
+// ignore_for_file: unnecessary_overrides
+
 import 'package:get/get.dart';
 
-class AllReminderController extends GetxController {
-  //TODO: Implement AllReminderController
+class NoAlertController extends GetxController {
 
   final count = 0.obs;
   @override

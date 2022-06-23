@@ -61,11 +61,14 @@ class HomeController extends GetxController {
     reminderDueSoon.clear();
     reminderNoAlert.clear();
     for (int i = 0; i < reminder.length; i++) {
+      //reminder overdue data
       if (reminder[i]!.time != "" &&
           DateTime.now()
               .isAfter(DateTime.parse(reminder[i]!.time.toString()))) {
         reminderOverdue.add(reminder[i]);
-      } else if (reminder[i]!.time != "" &&
+      }
+      //reminder duesoon data
+      else if (reminder[i]!.time != "" &&
           DateTime.now()
               .isBefore(DateTime.parse(reminder[i]!.time.toString()))) {
         reminderDueSoon.add(reminder[i]);
@@ -86,7 +89,9 @@ class HomeController extends GetxController {
                 dateTime.minute,
                 dateTime.second),
             payload: reminder[i]!.id!.toString());
-      } else if (reminder[i]!.time == "") {
+      }
+      //reminder no alert data
+      else if (reminder[i]!.time == "") {
         reminderNoAlert.add(reminder[i]);
       }
     }

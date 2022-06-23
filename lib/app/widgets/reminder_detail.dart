@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class ReminderDetail extends StatelessWidget {
@@ -27,8 +29,7 @@ class ReminderDetail extends StatelessWidget {
           Text(time!),
           Text(place!),
           Text(status!),
-          Text('$category'),
-          Text('lskdsjf'),
+          Text('$category')
         ],
       ),
     );

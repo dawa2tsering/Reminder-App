@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -38,7 +40,13 @@ class AppDatabase {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'reminder.db');
 
-    return await openDatabase(path, version: 1,
+    //creating onconfigrue function for opendatabase function's onConfigure parameter
+    Future _onConfigure(Database db) async {
+      //executig pragman foreign_keys to activate cascade delete
+      await db.execute('PRAGMA foreign_keys = ON');
+    }
+
+    return await openDatabase(path, version: 1, onConfigure: _onConfigure,
         onCreate: (Database db, int version) async {
       log("============Creating Category table=========");
       await db.execute("CREATE TABLE $categoryTable("
@@ -46,13 +54,16 @@ class AppDatabase {
           "$columnCategoryName TEXT NOT NULL)");
 
       log("============Creating Reminder table=========");
-      await db.execute("CREATE TABLE $reminderTable("
-          "$columnReminderId INTEGER PRIMARY KEY ASC,"
-          "$columnMemo TEXT NOT NULL,"
-          "$columnTime TEXT,"
-          "$columnPlace TEXT,"
-          "$columnStatus TEXT,"
-          "$columnCategory INTEGER NOT NULL)");
+      //'''inorder to use table name and column name variable
+      await db.execute('''CREATE TABLE $reminderTable(
+          $columnReminderId INTEGER PRIMARY KEY ASC,
+          $columnMemo TEXT NOT NULL,
+          $columnTime TEXT,
+          $columnPlace TEXT,
+          $columnStatus TEXT,
+          $columnCategory INTEGER,
+          CONSTRAINT fk_category FOREIGN KEY ($columnCategory) REFERENCES $categoryTable($columnCategoryId) ON DELETE CASCADE
+          )''');
     });
   }
 
@@ -62,6 +73,7 @@ class AppDatabase {
   List<Reminder?> reminderListById = [];
   List<Reminder?> completeReminderList = [];
   List<Reminder?> reminderCategoryList = [];
+  List<Reminder?> reminderCompleteCategoryList = [];
 
 ///////////////////Category////////////////////////////////////////////////////
   ///inserting map categories in catergoryTable
@@ -133,6 +145,14 @@ class AppDatabase {
     return [...reminderList];
   }
 
+  //delete reminder based on status
+  Future<int?> deleteReminder({String? status}) async {
+    final db = await database;
+    log("delete reminder successfully");
+    return await db!.delete(reminderTable,
+        where: '$columnStatus IN (?)', whereArgs: [status]);
+  }
+
   //get reminder based on columnStatus which has argument status
   Future<List<Reminder?>> queryReminderById({int? id}) async {
     final db = await database;
@@ -164,7 +184,7 @@ class AppDatabase {
   }
 
   //delete reminder based on id
-  Future<int?> deleteReminder({int? id}) async {
+  Future<int?> deleteReminderId({int? id}) async {
     final db = await database;
     log("delete reminder successfully");
     return await db!.delete(reminderTable,
@@ -184,5 +204,18 @@ class AppDatabase {
         : [];
     log("queried");
     return [...reminderCategoryList];
+  }
+
+  Future<List<Reminder?>> queryCompletedReminderByCategory(
+      {required int categoryId}) async {
+    final db = await database;
+    var reminderCategory = await db!.query(reminderTable,
+        where: '$columnStatus IN (?) and $columnCategory IN (?)',
+        whereArgs: ["complete", categoryId]);
+    reminderCompleteCategoryList = reminderCategory.isNotEmpty
+        ? reminderCategory.map((e) => Reminder?.fromJson(e)).toList()
+        : [];
+    log("queried");
+    return [...reminderCompleteCategoryList];
   }
 }

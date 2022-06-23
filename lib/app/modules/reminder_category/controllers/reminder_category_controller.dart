@@ -1,19 +1,19 @@
 // ignore_for_file: unnecessary_overrides
-
 import 'package:get/get.dart';
 import 'package:reminder_app/app/database/database_helper.dart';
 import 'package:reminder_app/app/locator.dart/locator.dart';
 import 'package:reminder_app/app/model/reminder.dart';
+import 'package:reminder_app/app/modules/home/controllers/home_controller.dart';
+import 'package:reminder_app/app/utils/notification_service.dart';
 
-class ReminderCategoryController extends GetxController{
+class ReminderCategoryController extends GetxController {
   // ignore: todo
   //TODO: Implement ReminderCategoryController
 
   List<Reminder?> reminder = RxList();
-  List<Reminder?> reminderOverdue = RxList();
-  List<Reminder?> reminderDueSoon = RxList();
-  List<Reminder?> reminderNoAlert = RxList();
+  List<Reminder?> reminderCompleted = RxList();
   RxBool loading = false.obs;
+  final _homeController = Get.put(HomeController());
 
   @override
   void onInit() {
@@ -28,36 +28,24 @@ class ReminderCategoryController extends GetxController{
 
   getReminder() async {
     loading.value = true;
-    reminder = await locator<AppDatabase>()
-        .queryReminderByCategory(categoryId: Get.arguments["id"]);     //get argument used  to pass data from view accessible to both controller and view
-    reminderOverdue.clear();
-    reminderDueSoon.clear();
-    reminderNoAlert.clear();
-    for (int i = 0; i < reminder.length; i++) {
-      if (reminder[i]!.time != "" &&
-          DateTime.now()
-              .isAfter(DateTime.parse(reminder[i]!.time.toString()))) {
-        reminderOverdue.add(reminder[i]);
-      } else if (reminder[i]!.time != "" &&
-          DateTime.now()
-              .isBefore(DateTime.parse(reminder[i]!.time.toString()))) {
-        reminderDueSoon.add(reminder[i]);
-      } else if (reminder[i]!.time == "") {
-        reminderNoAlert.add(reminder[i]);
-      }
-    }
-    reminderOverdue.sort(
-        (b, a) => DateTime.parse(a!.time!).compareTo(DateTime.parse(b!.time!)));
-    reminderDueSoon.sort(
-        (a, b) => DateTime.parse(a!.time!).compareTo(DateTime.parse(b!.time!)));
-    reminderNoAlert.sort((b, a) => a!.id!.compareTo(b!.id!));
+    reminder = await locator<AppDatabase>().queryReminderByCategory(
+        categoryId: Get.arguments[
+            "id"]); //get argument used  to pass data from view accessible to both controller and view
+    reminderCompleted = await locator<AppDatabase>()
+        .queryCompletedReminderByCategory(categoryId: Get.arguments["id"]);
+    //get argument used  to pass data from view accessible to both controller and view
     loading.value = false;
   }
 
   updateReminderByStatus(int? id) async {
     await locator<AppDatabase>()
-        .updateReminderStatus(status: 'complete', id: id);
+        .updateReminderStatus(status: "complete", id: id);
+    NotificationService.cancelScheduleNotification(id: id!);
     getReminder();
+    _homeController.getReminder();
+    _homeController.reminderDueSoon.isEmpty
+        ? _homeController.startTimer()
+        : null;
   }
 
   @override

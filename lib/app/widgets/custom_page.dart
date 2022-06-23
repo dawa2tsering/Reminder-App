@@ -7,7 +7,8 @@ import 'package:reminder_app/app/modules/search_reminder/views/search_reminder_v
 class CustomPage extends StatelessWidget {
   String title;
   Widget body;
-  CustomPage({Key? key, required this.title, required this.body})
+  VoidCallback? onTap;
+  CustomPage({Key? key, required this.title, required this.body, this.onTap})
       : super(key: key);
 
   @override
@@ -36,7 +37,8 @@ class CustomPage extends StatelessWidget {
                       child: Icon(Icons.more_vert),
                       itemBuilder: (context) => [
                             PopupMenuItem(
-                              child: Text('Edit'),
+                              onTap: onTap,
+                              child: Text('Delete'),
                             ),
                             PopupMenuItem(
                               child: Text('Sort By'),

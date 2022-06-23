@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +9,9 @@ import 'package:reminder_app/app/modules/category/controllers/category_controlle
 import 'package:reminder_app/app/modules/category/views/category_view.dart';
 import 'package:reminder_app/app/modules/completed_reminder/views/completed_reminder_view.dart';
 import 'package:reminder_app/app/modules/due_soon/views/due_soon_view.dart';
+import 'package:reminder_app/app/modules/no_alert/views/no_alert_view.dart';
 import 'package:reminder_app/app/modules/over_due/views/over_due_view.dart';
 import 'package:reminder_app/app/modules/reminder_category/views/reminder_category_view.dart';
-import 'package:reminder_app/app/utils/notification_service.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({Key? key}) : super(key: key);
@@ -49,6 +47,14 @@ class CustomDrawer extends StatelessWidget {
             title: const Text("Due soon"),
             onTap: () {
               Get.to(() => DueSoonView());
+            },
+          ),
+          ListTile(
+            selectedColor: Colors.red,
+            leading: Icon(Icons.timer_off_sharp),
+            title: const Text("No Alert"),
+            onTap: () {
+              Get.to(() => NoAlertView());
             },
           ),
           ListTile(

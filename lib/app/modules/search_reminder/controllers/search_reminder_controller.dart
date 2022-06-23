@@ -6,7 +6,7 @@ import 'package:reminder_app/app/locator.dart/locator.dart';
 import 'package:reminder_app/app/model/reminder.dart';
 
 class SearchReminderController extends GetxController {
-  //TODO: Implement SearchReminderController
+
   List<Reminder?> reminder = RxList();
   RxBool textListener = false.obs;
   RxBool searchListener = false.obs;

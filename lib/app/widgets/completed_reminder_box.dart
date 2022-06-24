@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class ReminderBox extends StatelessWidget {
+class CompleteReminderBox extends StatelessWidget {
   String? memo;
   String? date;
-  VoidCallback? onChecked;
+  VoidCallback? onPressed;
   VoidCallback? onTap;
-  ReminderBox(
-      {Key? key, required this.memo, this.date, this.onChecked, this.onTap})
+  CompleteReminderBox(
+      {Key? key, this.memo, this.date, this.onPressed, this.onTap})
       : super(key: key);
 
   @override
@@ -34,6 +34,8 @@ class ReminderBox extends StatelessWidget {
                   child: Text(
                     memo!,
                     overflow: TextOverflow.ellipsis,
+                    style:
+                        const TextStyle(decoration: TextDecoration.lineThrough),
                   )),
               if (date != "")
                 Column(
@@ -41,15 +43,17 @@ class ReminderBox extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(DateFormat('EEE, d MMM  hh:mm a')
-                        .format(DateTime.parse(date!))),
+                    Text(
+                      DateFormat('EEE, d MMM  hh:mm a')
+                          .format(DateTime.parse(date!)),
+                    ),
                   ],
                 ),
             ]),
             IconButton(
-                onPressed: onChecked,
+                onPressed: onPressed,
                 icon: const Icon(
-                  Icons.check_box_outline_blank,
+                  Icons.check_box_outlined,
                   color: Colors.grey,
                 ))
           ],

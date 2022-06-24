@@ -10,8 +10,6 @@ import 'package:reminder_app/app/utils/notification_service.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class HomeController extends GetxController {
-  // ignore: todo
-  //TODO: Implement HomeController
   List<Reminder?> reminder = RxList();
   List<Reminder?> reminderOverdue = RxList();
   List<Reminder?> reminderDueSoon = RxList();

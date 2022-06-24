@@ -14,8 +14,6 @@ import 'package:reminder_app/app/modules/reminder_category/controllers/reminder_
 import 'package:reminder_app/app/utils/notification_service.dart';
 
 class ReminderDetailController extends GetxController {
-  // ignore: todo
-  //TODO: Implement ReminderDetailController
   final _categoryController = Get.put(CategoryController());
   final _reminderCategoryController = Get.put(ReminderCategoryController());
   final _completedReminderController = Get.put(CompletedReminderController());

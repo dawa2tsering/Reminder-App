@@ -7,8 +7,6 @@ import 'package:reminder_app/app/locator.dart/locator.dart';
 import 'package:reminder_app/app/modules/home/controllers/home_controller.dart';
 
 class AddReminderController extends GetxController {
-  // ignore: todo
-  //TODO: Implement AddReminderController
 
   var buttonEnable = false.obs;
   final memoController = TextEditingController();

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reminder_app/app/locator.dart/locator.dart';
 import 'package:reminder_app/app/modules/reminder_detail/views/reminder_detail_view.dart';
@@ -13,9 +14,10 @@ void main() async {
   //initializing listen notification
   listenNotification();
   runApp(
-    const GetMaterialApp(
+    GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: const SplashScreen(),
+      theme: ThemeData.light(),
     ),
   );
 }

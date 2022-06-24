@@ -7,8 +7,6 @@ import 'package:reminder_app/app/locator.dart/locator.dart';
 import 'package:reminder_app/app/model/category.dart';
 
 class CategoryController extends GetxController {
-  // ignore: todo
-  //TODO: Implement CategoryController
 
   var editOnpressed = false.obs;
   TextEditingController categoryController = TextEditingController();

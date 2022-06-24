@@ -3,8 +3,6 @@
 import 'package:get/get.dart';
 
 class DueSoonController extends GetxController {
-  // ignore: todo
-  //TODO: Implement DueSoonController
 
   @override
   void onInit() {

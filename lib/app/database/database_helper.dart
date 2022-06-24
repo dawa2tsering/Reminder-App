@@ -40,31 +40,35 @@ class AppDatabase {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'reminder.db');
 
-    //creating onconfigrue function for opendatabase function's onConfigure parameter
-    Future _onConfigure(Database db) async {
-      //executig pragman foreign_keys to activate cascade delete
-      await db.execute('PRAGMA foreign_keys = ON');
-    }
+    return await openDatabase(
+      path,
+      version: 1,
+      //TODO: apply cascade delete in one to many relationship
 
-    return await openDatabase(path, version: 1, onConfigure: _onConfigure,
-        onCreate: (Database db, int version) async {
-      log("============Creating Category table=========");
-      await db.execute("CREATE TABLE $categoryTable("
-          "$columnCategoryId INTEGER PRIMARY KEY ASC,"
-          "$columnCategoryName TEXT NOT NULL)");
+      // onConfigure: (Database db) async {
+      //   //executig pragman foreign_keys to activate cascade delete
+      //   await db.execute("PRAGMA foreign_keys = ON");
+      // },
+      onCreate: (Database db, int version) async {
+        log("============Creating Category table=========");
+        await db.execute('''CREATE TABLE $categoryTable(
+            $columnCategoryId INTEGER PRIMARY KEY ASC,
+            $columnCategoryName TEXT NOT NULL
+            )''');
 
-      log("============Creating Reminder table=========");
-      //'''inorder to use table name and column name variable
-      await db.execute('''CREATE TABLE $reminderTable(
+        log("============Creating Reminder table=========");
+        //'''inorder to use table name and column name variable
+        await db.execute('''CREATE TABLE $reminderTable(
           $columnReminderId INTEGER PRIMARY KEY ASC,
           $columnMemo TEXT NOT NULL,
           $columnTime TEXT,
           $columnPlace TEXT,
           $columnStatus TEXT,
-          $columnCategory INTEGER,
-          CONSTRAINT fk_category FOREIGN KEY ($columnCategory) REFERENCES $categoryTable($columnCategoryId) ON DELETE CASCADE
+          $columnCategory INTEGER NOT NULL,
+          FOREIGN KEY ($columnCategory) REFERENCES $categoryTable($columnCategoryId) ON DELETE CASCADE
           )''');
-    });
+      },
+    );
   }
 
   List<Category?> categoryList = [];

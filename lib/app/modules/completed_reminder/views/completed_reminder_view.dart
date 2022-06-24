@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:reminder_app/app/modules/reminder_detail/views/reminder_detail_view.dart';
+import 'package:reminder_app/app/widgets/completed_reminder_box.dart';
 import 'package:reminder_app/app/widgets/custom_dialogue.dart';
 import 'package:reminder_app/app/widgets/custom_page.dart';
 
@@ -73,7 +74,7 @@ class CompletedReminderView extends GetView<CompletedReminderController> {
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
-                                  reminderBox(
+                                  CompleteReminderBox(
                                     memo: _completedReminderController
                                         .reminderCompleted[index]!.memo,
                                     date: _completedReminderController
@@ -104,57 +105,6 @@ class CompletedReminderView extends GetView<CompletedReminderController> {
             const SizedBox(
               height: 10,
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget reminderBox(
-      {String? memo,
-      String? date,
-      VoidCallback? onPressed,
-      VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: Get.width,
-        padding:
-            const EdgeInsets.only(top: 20, left: 30, right: 10, bottom: 20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
-            BoxShadow(color: Colors.grey, blurRadius: 1),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(
-                  width: 200,
-                  child: Text(
-                    memo!,
-                    overflow: TextOverflow.ellipsis,
-                  )),
-              if (date != "")
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(DateFormat('EEE, d MMM  hh:mm a')
-                        .format(DateTime.parse(date!))),
-                  ],
-                ),
-            ]),
-            IconButton(
-                onPressed: onPressed,
-                icon: const Icon(
-                  Icons.check_box_outlined,
-                  color: Colors.grey,
-                ))
           ],
         ),
       ),

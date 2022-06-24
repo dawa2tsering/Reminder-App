@@ -7,8 +7,6 @@ import 'package:reminder_app/app/model/reminder.dart';
 import 'package:reminder_app/app/modules/home/controllers/home_controller.dart';
 
 class CompletedReminderController extends GetxController {
-  // ignore: todo
-  //TODO: Implement CompletedReminderController
   RxBool loading = false.obs;
   List<Reminder?> reminderCompleted = RxList();
   final _homeController = Get.put(HomeController());
